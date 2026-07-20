@@ -29,8 +29,11 @@ function checkLogin($email, $password)
 
 
 function get_all_produit() {
-    $sql = "SELECT * from produits";
-    retun get_all_lines($sql); 
+    $sql = "SELECT  produit.nom , produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite 
+    from produit_membre
+    join produit 
+    on produit_membre.id_produit=produit.id_produit";
+    return get_all_lines($sql); 
 }
 
 ?>

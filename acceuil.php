@@ -1,3 +1,8 @@
+<?php 
+include_once("functions.php");
+$produits=get_all_produit();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +11,12 @@
     <title>Acceuil</title>
 </head>
 <body>
-    
-</body>
+    <?php foreach ($produits as $p) { ?>
+   
+        <h1> Nom: <?php echo $p["nom"]; ?> </h1>
+        <h1> Prix :<?php echo $p["prix"]; ?></h1>
+        <h1> Quantite :<?php echo $p["quantite"]; ?> </h1>
+        <p> ======</p>
+    <?php }?>
+    </body>
 </html>
