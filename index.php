@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,4 +9,4 @@
 <body>
     <a href="acceuil.php">Acceuil</a>
 </body>
-</html>
+</html>  

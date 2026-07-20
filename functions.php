@@ -29,11 +29,33 @@ function checkLogin($email, $password)
 
 
 function get_all_produit() {
-    $sql = "SELECT  produit.nom , produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite 
+    $sql = "SELECT  produit.id_produit,produit.nom , produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite 
     from produit_membre
     join produit 
     on produit_membre.id_produit=produit.id_produit";
     return get_all_lines($sql); 
+}
+function acheter_produit($id,$qte_acheter,$qte_produit){
+    if($qte_produit < $qte_acheter ){
+        return 1;
+    }
+    elseif($qte_produit == 0){
+        return 0 ;
+    }
+    else {
+        $nv_qte=$qte_produit - $qte_acheter;
+        if($nv_qte < 0 ){
+            return -1;
+        }
+        else {
+            $update="UPDATE produit_membre set quantite_dispo=$nv_qte where id_produit=$id";
+            mysqli_query(dbconnect(), $update);
+            return 2;
+        }
+
+    }
+  
+
 }
 
 ?>
