@@ -15,7 +15,7 @@ $liste = liste_deroulante_vendre();
     <form action="traitement_vendre.php" method="get">
     Produit :   <select name="produit" id="">
                     <?php for ($i = 0; $i < count($liste); $i++){ ?>
-                        <option value="<?php $i?>"><?php echo $liste[$i]['nom']?></option>
+                        <option value="<?php echo $i?>"><?php echo $liste[$i]['nom']?></option>
                     <?php } ?>
                 </select><br>
     <br>
