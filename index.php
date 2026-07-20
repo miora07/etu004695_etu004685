@@ -8,6 +8,7 @@
 </head>
 <body>
     <form action="traitement_log.php" method="get">
+
         <h1>Log in</h1>
         etu <input type="text" name="etu">
         <input type="submit" value="valider">

@@ -98,6 +98,17 @@ function unset_favorite($user_id, $song_id)
     $sql = sprintf($sql, $user_id, $song_id);
     mysqli_query(dbconnect(), $sql);
 }
+function liste_deroulante_vendre(){
+    $sql = "Select * from produit";
+    $req = mysqli_query(dbconnect(),$sql );
+    $result = array();
+    while ($line = mysqli_fetch_assoc($req)) {
+        $result[] = $line;
+    }
+    mysqli_free_result($req);
+    return $result;
+}
+
 ?>
 
 

@@ -1,6 +1,7 @@
 <?php 
 include_once("functions.php");
 $produits=get_all_produit();
+
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +12,7 @@ $produits=get_all_produit();
     <title>Acceuil</title>
 </head>
 <body>
+<a href="vendre.php"> Vendre des nouveaux produit</a>
     <?php foreach ($produits as $p) { ?>
    
         <h1> Nom: <?php echo $p["nom"]; ?> </h1>
