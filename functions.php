@@ -30,13 +30,6 @@ function inscription($nom, $etu,$image)
     $req = mysqli_query(dbconnect(),$sql );
 }
 
-function get_all_produit() {
-    $sql = "SELECT  produit.nom , produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite 
-    from produit_membre
-    join produit 
-    on produit_membre.id_produit=produit.id_produit";
-    return get_all_lines($sql); 
-}
 
 function get_all_lines($sql){
     $req = mysqli_query(dbconnect(),$sql );
@@ -54,7 +47,39 @@ function get_one_line($sql){
     mysqli_free_result($req);
     return $result;
 }
+function get_all_produit() {
+    $sql = "SELECT membre.id_membre,membre.nom as membre, produit.id_produit,produit.nom , produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite 
+    from produit_membre
+    join produit 
+    on produit_membre.id_produit=produit.id_produit
+    join membre 
+    on produit_membre.id_membre=membre.id_membre
+ ";
+    return get_all_lines($sql); 
 
+}
+function acheter_produit($id,$qte_acheter,$qte_produit){
+    if($qte_produit < $qte_acheter ){
+        return 1;
+    }
+    elseif($qte_produit == 0){
+        return 0 ;
+    }
+    else {
+        $nv_qte=$qte_produit - $qte_acheter;
+        if($nv_qte < 0 ){
+            return -1;
+        }
+        else {
+            $update="UPDATE produit_membre set quantite_dispo=$nv_qte where id_produit=$id";
+            mysqli_query(dbconnect(), $update);
+            return 2;
+        }
+
+    }
+  
+
+}
 function liste_deroulante_vendre(){
     $sql = "Select * from produit";
     $req = mysqli_query(dbconnect(),$sql );
