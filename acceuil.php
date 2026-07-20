@@ -1,6 +1,7 @@
 <?php 
+session_start();
 include_once("functions.php");
-
+$id_membre= $_SESSION['id_membre']; 
 $produits=get_all_produit();
 
 ?>
@@ -26,10 +27,13 @@ $produits=get_all_produit();
      
 
 
-        <input type="hidden" name="i   group by membred_produit" value="<?=$p["id_produit"]?>">
+        <input type="hidden" name="id_produit" value="<?=$p["id_produit"]?>">
+        <input type="hidden" name="id_produit_membre" value="<?=$p["id_produit_membre"]?>">
         <input type="hidden" name="stock" value="<?=$p["quantite"]?>">
         <input type="submit" value="Acheter" >
-        <h1><a href="mes_ventes.php?id=<?=$p["id_membre"]?>">Voir mes ventes</a></h1>
+        <?php if ($p["id_membre"] == $id_membre){?>
+        <h1><a href="mes_ventes.php?id=<?=$p["id_produit"]?>">Voir mes ventes</a></h1>
+        <?php } ?>
         <p>=================================================================================</p>
         </form>
         

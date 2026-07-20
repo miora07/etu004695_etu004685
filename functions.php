@@ -52,7 +52,8 @@ function get_one_line($sql){
 
 
 function get_all_produit() {
-    $sql = "SELECT membre.id_membre,membre.nom as membre, produit.id_produit,produit.nom , produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite 
+    $sql = "SELECT membre.id_membre,membre.nom as membre, produit.id_produit,produit.nom ,produit_membre.id_produit_membre,
+     produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite 
     from produit_membre
     join produit 
     on produit_membre.id_produit=produit.id_produit
@@ -62,7 +63,9 @@ function get_all_produit() {
     return get_all_lines($sql); 
 
 }
-function acheter_produit($id,$qte_acheter,$qte_produit){
+
+
+function acheter_produit($id_produit,$id_produit_membre,$qte_acheter,$qte_produit){
     if($qte_produit < $qte_acheter ){
         return 1;
     }
@@ -75,7 +78,9 @@ function acheter_produit($id,$qte_acheter,$qte_produit){
             return -1;
         }
         else {
-            $update="UPDATE produit_membre set quantite_dispo=$nv_qte where id_produit=$id";
+            $vente = "INSERT INTO vente(id_produit_membre,quantite) values($id_produit_membre,$qte_acheter)";
+            mysqli_query(dbconnect(), $vente);
+            $update="UPDATE produit_membre set quantite_dispo=$nv_qte where id_produit=$id_produit";
             mysqli_query(dbconnect(), $update);
             return 2;
         }
@@ -95,6 +100,19 @@ function liste_deroulante_vendre(){
     }
     mysqli_free_result($req);
     return $result;
+}
+
+function total_vente($id_produit){
+    $sql = "SELECT membre.nom ,vente.id_produit_membre , SUM(vente.quantite*produit_membre.prix_vente) as total
+    from vente
+    join produit_membre
+    on vente.id_produit_membre=produit_membre.id_produit_membre
+    join membre
+    on membre.id_membre=produit_membre.id_membre
+    where produit_membre.id_produit= '%s'
+    group by produit_membre.id_produit_membre";
+    $sql=sprintf($sql,$id_produit);
+    return get_all_lines($sql);
 }
 
 ?>
