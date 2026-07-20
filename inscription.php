@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,11 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="traitement_log.php" method="get">
-        <h1>Log in</h1>
+    <form action="traitement_inscription.php" method="get">
+        nom <input type="text" name="nom">
         etu <input type="text" name="etu">
-        <input type="submit" value="valider">
-    </form>
-
+        photo <input type="text" name="photo">
+        <input type="submit" value= "valider">
+</form>
 </body>
 </html>
