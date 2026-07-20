@@ -26,7 +26,7 @@ CREATE TABLE produit_membre (
     id_produit INT,
     id_membre INT,
     prix_vente FLOAT,
-    quantite_dispo INT DEFAULT 0,
+    quantite_dispo INT ,
     date_dispo DATE,
     FOREIGN KEY (id_produit) REFERENCES produit(id_produit),
     FOREIGN KEY (id_membre) REFERENCES membre(id_membre)
