@@ -19,8 +19,7 @@
 
                 <div class="mb-3">
                     <label for="etu" class="form-label">ETU</label>
-                    <input type="text" class="form-control" id="etu" name="etu" value="etu004695"
-                        placeholder="Entrez votre numéro étudiant">
+                    <input type="text" class="form-control" id="etu" name="etu" value="etu004695" placeholder="Entrez votre numéro étudiant">
                 </div>
 
                 <div class="d-grid">

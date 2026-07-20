@@ -104,4 +104,4 @@ INSERT INTO produit_membre (id_produit, id_membre, prix_vente, quantite_dispo, d
 (13, 10, 1900.00, 4, '2026-04-24'),
 (2, 10, 3800.00, 2, '2026-04-24'); 
 
-
+ALTER TABLE produit_membre ADD COLUMN photo VARCHAR(200);

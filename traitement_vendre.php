@@ -17,5 +17,5 @@ if(empty($id_produit)){
     die("Veuillez choisir un produit");
 }
 vendre($id_produit,$id_membre,$prix,$qtt,$chemin_photo);
-
+header("Location: acceuil.php");
 ?>

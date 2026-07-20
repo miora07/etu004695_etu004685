@@ -34,3 +34,9 @@ stat_membre.php:
     -statistique par membre
 stat_produit:
     -statistique par produit
+ajout_modif.php:
+    -ajouter et modifier
+input_ajouter.php:
+    -formulaire d'ajout de produits
+traitement_ajouter.php:
+    -traitement d'ajout des produits

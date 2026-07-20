@@ -51,20 +51,25 @@ function get_one_line($sql){
 
 
 
-function get_all_produit() {
+function get_all_produit($tri) {
     $sql = "SELECT membre.id_membre,membre.nom as membre, produit.id_produit,produit.nom ,produit_membre.id_produit_membre,
-     produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite 
+     produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite , produit_membre.photo as photo
     from produit_membre
     join produit 
     on produit_membre.id_produit=produit.id_produit
     join membre 
-    on produit_membre.id_membre=membre.id_membre
- ";
-    return get_all_lines($sql); 
+    on produit_membre.id_membre=membre.id_membre";
+    if ($tri == 'produit') {
+        $sql =  $sql . " ORDER BY produit.nom";
+    }
 
+    if ($tri == 'categorie') {
+        $sql = $sql . " ORDER BY produit.id_categorie";
+    }
+
+    return get_all_lines($sql);
 }
-
-
+ 
 function acheter_produit($id_produit,$id_produit_membre,$qte_acheter,$qte_produit){
     if($qte_produit < $qte_acheter ){
         return 1;
@@ -163,37 +168,57 @@ function stat_membre($id_produit){
     return get_all_lines($sql);
 }
 function vendre($id_produit,$id_member,$prix,$qtt,$image){
-        $date = date("Y-m-d");
-        $sql = "INSERT INTO 
-        produit_membre(id_produit, id_membre, prix_vente, quantite_dispo, date_dispo,photo)
-         VALUES (%d,%d,%f,%d,'%s','%s')";
-       $sql = sprintf($sql, $id_produit,$id_member,$prix,$qtt,$date,$image);
-       mysqli_query(dbconnect(),$sql);
+    $date = date("Y-m-d");
+
+
+    if (empty($image)) {
+        $image = "upload/default_pic.png"; 
+    }
+
+    $sql = "UPDATE produit_membre set prix_vente=%f,quantite_dispo=%d,date_dispo='%s',photo='%s' 
+    where id_produit=%d and id_membre=%d";
+
+    $sql = sprintf($sql,$prix,$qtt,$date,$image,$id_produit,$id_member);
+    mysqli_query(dbconnect(),$sql);
 }
 
 function upload($fichier){
+    if (empty($fichier["name"])) {
+        return null;
+    }
+
     $dossier = "uploads/";
     $nom = $fichier["name"];
-    $tmp=$fichier["tmp_name"];
+    $tmp = $fichier["tmp_name"];
 
-    $extension =strtolower(pathinfo($nom,PATHINFO_EXTENSION));
-    $autorise =["jpg","jpeg","png"];
-    if(!in_array($extension , $autorise)){
+    $extension = strtolower(pathinfo($nom, PATHINFO_EXTENSION));
+    $autorise = ["jpg","jpeg","png"];
+    if(!in_array($extension, $autorise)){
         die("Format non autorise");
     }
-    $nv_nom=time() . "_" . rand(100,999) . "." .$extension;
+    $nv_nom = time() . "_" . rand(100,999) . "." . $extension;
     $chemin = $dossier . $nv_nom;
-    move_uploaded_file($tmp,$chemin);
+    move_uploaded_file($tmp, $chemin);
     return $chemin;
-
+}
+function get_id_categorie_by_nom($nom_categorie){
+    $sql = "SELECT id_categorie from categorie where nom_categorie='%s'";
+    $sql=sprintf($sql,$nom_categorie);
+    return get_one_line($sql);
 }
 
-
-
-
-
-?>
-
+function ajouter_produit($nom,$nom_categorie,$prix_reference){
+    $id_categorie = get_id_categorie_by_nom($nom_categorie);
+    if (empty($id_categorie)){
+        $sql = "INSERT INTO categorie(nom_categorie) values('%s')";
+        $sql = sprintf($sql,$nom_categorie);
+        mysqli_query(dbconnect(),$sql);
+        $id_categorie = get_id_categorie_by_nom($nom_categorie);
+    }
+    $sql2 = "INSERT INTO produit(nom,id_categorie,prix_reference) values('%s',%d,%f)";
+    $sql2 = sprintf($sql2,$nom,$id_categorie['id_categorie'],$prix_reference);
+      mysqli_query(dbconnect(),$sql2);
+}
 
 
 
