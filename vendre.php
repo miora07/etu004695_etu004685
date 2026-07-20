@@ -12,12 +12,14 @@ $liste = liste_deroulante_vendre();
 </head>
 <body>
     <h1>Veuiller selectionne vos nouveaux articles</h1>
-    <form action="traitement_vendre.php" method="get">
+    <form action="traitement_vendre.php" method="POST"  enctype="multipart/form-data">
     Produit :   <select name="produit" id="">
                     <?php for ($i = 0; $i < count($liste); $i++){ ?>
                         <option value="<?php echo $i?>"><?php echo $liste[$i]['nom']?></option>
                     <?php } ?>
                 </select><br>
+    <br>
+    Photo : <input type="file" name="photo">
     <br>
     Prix : <input type="number" name="prix"> <br>
     <br>
