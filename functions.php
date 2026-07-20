@@ -30,6 +30,13 @@ function inscription($nom, $etu,$image)
     $req = mysqli_query(dbconnect(),$sql );
 }
 
+function get_all_produit() {
+    $sql = "SELECT  produit.nom , produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite 
+    from produit_membre
+    join produit 
+    on produit_membre.id_produit=produit.id_produit";
+    return get_all_lines($sql); 
+}
 
 // function get_all_lines($sql){
 //     $req = mysqli_query(dbconnect(),$sql );
@@ -92,3 +99,7 @@ function inscription($nom, $etu,$image)
 //     mysqli_query(dbconnect(), $sql);
 // }
 // ?>
+
+
+
+
