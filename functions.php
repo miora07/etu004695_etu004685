@@ -109,7 +109,7 @@ function total_vente($id_produit){
     on vente.id_produit_membre=produit_membre.id_produit_membre
     join membre
     on membre.id_membre=produit_membre.id_membre
-    where produit_membre.id_produit= '%s'
+    where produit_membre.id_produit= '%s' 
     group by produit_membre.id_produit_membre";
     $sql=sprintf($sql,$id_produit);
     return get_all_lines($sql);
