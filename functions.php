@@ -86,6 +86,17 @@ function acheter_produit($id,$qte_acheter,$qte_produit){
 }
 
 
+function liste_deroulante_vendre(){
+    $sql = "Select * from produit";
+    $req = mysqli_query(dbconnect(),$sql );
+    $result = array();
+    while ($line = mysqli_fetch_assoc($req)) {
+        $result[] = $line;
+    }
+    mysqli_free_result($req);
+    return $result;
+}
+
 ?>
 
 
