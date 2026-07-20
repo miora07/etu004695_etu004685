@@ -7,6 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="acceuil.php">Acceuil</a>
+    <form action="traitement_log.php" method="get">
+        <h1>Log in</h1>
+        etu :<input type="text" name="etu"value="etu004695">
+        <input type="submit" value="valider">
+    </form>
+
+
 </body>
 </html>  
