@@ -13,6 +13,7 @@ $liste = liste_deroulante_vendre();
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="font/bootstrap-icons.css">
 </head>
+
 <body class="bg-light">
 
 <div class="container mt-5">
@@ -45,6 +46,10 @@ $liste = liste_deroulante_vendre();
                             <label class="form-label">Prix</label>
                             <input type="number" name="prix" class="form-control" placeholder="Entrez le prix" required>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Photo</label>
+                            <input type="file" name="photo" class="form-control" >
+                        </div>
 
                         <div class="mb-3">
                             <label class="form-label">Quantité</label>
@@ -75,5 +80,6 @@ $liste = liste_deroulante_vendre();
 
 <script src="js/bootstrap.bundle.min.js"></script>
 
+</form>
 </body>
 </html>

@@ -101,7 +101,6 @@ function liste_deroulante_vendre(){
     mysqli_free_result($req);
     return $result;
 }
-
 function total_vente($id_produit){
     $sql = "SELECT membre.nom ,vente.id_produit_membre , SUM(vente.quantite*produit_membre.prix_vente) as total
     from vente
@@ -163,6 +162,35 @@ function stat_membre($id_produit){
     $sql = sprintf($sql,$id_produit);
     return get_all_lines($sql);
 }
+function vendre($id_produit,$id_member,$prix,$qtt,$image){
+        $date = date("Y-m-d");
+        $sql = "INSERT INTO 
+        produit_membre(id_produit, id_membre, prix_vente, quantite_dispo, date_dispo,photo)
+         VALUES (%d,%d,%f,%d,'%s','%s')";
+       $sql = sprintf($sql, $id_produit,$id_member,$prix,$qtt,$date,$image);
+       mysqli_query(dbconnect(),$sql);
+}
+
+function upload($fichier){
+    $dossier = "uploads/";
+    $nom = $fichier["name"];
+    $tmp=$fichier["tmp_name"];
+
+    $extension =strtolower(pathinfo($nom,PATHINFO_EXTENSION));
+    $autorise =["jpg","jpeg","png"];
+    if(!in_array($extension , $autorise)){
+        die("Format non autorise");
+    }
+    $nv_nom=time() . "_" . rand(100,999) . "." .$extension;
+    $chemin = $dossier . $nv_nom;
+    move_uploaded_file($tmp,$chemin);
+    return $chemin;
+
+}
+
+
+
+
 
 ?>
 
