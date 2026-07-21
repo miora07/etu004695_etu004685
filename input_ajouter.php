@@ -66,7 +66,7 @@ if (!isset($_SESSION['id_membre'])){
                 </div>
 
                 <div class="card-footer text-end">
-                    <a href="accueil.php" class="btn btn-secondary">
+                    <a href="ajout_modif.php" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i>
                         Retour
                     </a>
