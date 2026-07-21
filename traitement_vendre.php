@@ -11,11 +11,12 @@ $qtt = $_POST['qtt'];
 
 // traitement photo
 $chemin_photo = upload($_FILES['photo']);
-
+($chemin_photo);
 
 if(empty($id_produit)){
     die("Veuillez choisir un produit");
 }
-vendre($id_produit,$id_membre,$prix,$qtt,$chemin_photo);
-header("Location: acceuil.php");
+
+(vendre($id_produit,$id_membre,$prix,$qtt,$chemin_photo));
+ header("Location: acceuil.php");
 ?>

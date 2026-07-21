@@ -57,7 +57,7 @@ $produits = get_all_produit($tri);
                     <button type="submit" class="btn btn-success">
                         <i class="bi bi-funnel"></i> Trier
                     </button>
-
+</form>
 
             </div>
         </div>
@@ -69,15 +69,14 @@ $produits = get_all_produit($tri);
             <div class="col-md-6 col-lg-4 mb-4">
 
                 <div class="card shadow h-100">
-
-
-
                     <div class="bg-light border d-flex justify-content-center align-items-center" style="height:220px;">
-                        <?php if (!empty($p["photo"]) && file_exists($p["photo"])) { ?>
+                        <?php if (!empty($p["photo"])) { ?>
                         <img src="<?= $p["photo"] ?>" class="img-fluid" style="max-height:220px;object-fit:cover;"
                             alt="<?= $p["nom"] ?>">
                         <?php } else { ?>
-                        <img src="uploads/default_pic.png" class="img-fluid" style="max-height:220px;object-fit:cover;"
+                        <img src="uploads/default_pic.png" 
+                        
+                        class="img-fluid" style="max-height:220px;object-fit:cover;"
                             alt="Image par défaut">
                         <?php } ?>
                     </div>

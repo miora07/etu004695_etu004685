@@ -32,17 +32,27 @@ function inscription($nom, $etu,$image)
 
 
 function get_all_lines($sql){
-    $req = mysqli_query(dbconnect(),$sql );
+    $req = mysqli_query(dbconnect(), $sql);
+
+    if (!$req) {
+        die("Erreur SQL : " . mysqli_error(dbconnect()) . "<br>Requête : " . $sql);
+    }
+
     $result = array();
     while ($line = mysqli_fetch_assoc($req)) {
         $result[] = $line;
     }
+
     mysqli_free_result($req);
     return $result;
 }
-
 function get_one_line($sql){
-    $req = mysqli_query(dbconnect(),$sql );
+    $req = mysqli_query(dbconnect(), $sql);
+
+    if (!$req) {
+        die("Erreur SQL : " . mysqli_error(dbconnect()) . "<br>Requête : " . $sql);
+    }
+
     $result = mysqli_fetch_assoc($req);
     mysqli_free_result($req);
     return $result;
@@ -50,10 +60,10 @@ function get_one_line($sql){
 
 
 
-
 function get_all_produit($tri) {
     $sql = "SELECT membre.id_membre,membre.nom as membre, produit.id_produit,produit.nom ,produit_membre.id_produit_membre,
-     produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite , produit_membre.photo as photo
+     produit_membre.prix_vente as prix , produit_membre.quantite_dispo as quantite , 
+     produit_membre.photo as photo
     from produit_membre
     join produit 
     on produit_membre.id_produit=produit.id_produit
@@ -83,7 +93,8 @@ function acheter_produit($id_produit,$id_produit_membre,$qte_acheter,$qte_produi
             return -1;
         }
         else {
-            $vente = "INSERT INTO vente(id_produit_membre,quantite) values($id_produit_membre,$qte_acheter)";
+            $vente = "INSERT INTO vente(id_produit_membre,quantite) 
+            values($id_produit_membre,$qte_acheter)";
             mysqli_query(dbconnect(), $vente);
             $update="UPDATE produit_membre set quantite_dispo=$nv_qte where id_produit=$id_produit";
             mysqli_query(dbconnect(), $update);
@@ -145,7 +156,7 @@ function stat_produit($id_categorie){
     left join vente 
     on produit_membre.id_produit_membre=vente.id_produit_membre
     where produit.id_categorie= '%s'
-    group by produit.id_categorie ,produit.nom
+    group by produit.id_produit, produit.nom
     order by produit.id_categorie ASC " ;
 
     $sql = sprintf($sql,$id_categorie);
@@ -169,15 +180,14 @@ function stat_membre($id_produit){
 }
 function vendre($id_produit,$id_member,$prix,$qtt,$image){
     $date = date("Y-m-d");
-
-
     if (empty($image)) {
-        $image = "upload/default_pic.png"; 
+        $image = "uploads/default_pic.png"; 
     }
 
-    $sql = "UPDATE produit_membre set prix_vente=%f,quantite_dispo=%d,date_dispo='%s',photo='%s' 
+    $sql = "UPDATE produit_membre
+     set prix_vente=%f,quantite_dispo=%d,date_dispo='%s',photo='%s' 
     where id_produit=%d and id_membre=%d";
-
+    
     $sql = sprintf($sql,$prix,$qtt,$date,$image,$id_produit,$id_member);
     mysqli_query(dbconnect(),$sql);
 }
