@@ -67,7 +67,7 @@ $liste = liste_deroulante_vendre();
                 </div>
 
                 <div class="card-footer text-end">
-                    <a href="index.php" class="btn btn-secondary">
+                    <a href="acceuil.php" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Retour
                     </a>
                 </div>
